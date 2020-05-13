@@ -1,0 +1,142 @@
+{
+  "name" : "Mastering",
+  "description" : "",
+  "batchSize" : 100,
+  "threadCount" : 4,
+  "stopOnError" : false,
+  "options" : { },
+  "version" : 0,
+  "steps" : {
+    "1" : {
+      "name" : "MasteringCustomer",
+      "description" : "",
+      "options" : {
+        "stepUpdate" : true,
+        "additionalCollections" : [ ],
+        "sourceQuery" : "cts.collectionQuery([\"MappingCustomer1\"])",
+        "acceptsBatch" : true,
+        "targetEntity" : "Customer",
+        "sourceCollection" : "MappingCustomer1",
+        "targetDatabase" : "data-hub-FINAL",
+        "sourceDatabase" : "data-hub-FINAL",
+        "collections" : [ "MasteringCustomer", "Customer" ],
+        "mergeOptions" : {
+          "matchOptions" : "",
+          "propertyDefs" : {
+            "properties" : [ ],
+            "namespaces" : { }
+          },
+          "algorithms" : {
+            "stdAlgorithm" : {
+              "timestamp" : { }
+            },
+            "custom" : [ ],
+            "collections" : { }
+          },
+          "mergeStrategies" : [ ],
+          "merging" : [ {
+            "algorithmRef" : "standard",
+            "maxValues" : "2",
+            "maxSources" : "2",
+            "sourceWeights" : [ ],
+            "default" : true
+          } ]
+        },
+        "permissions" : "data-hub-operator,read,data-hub-operator,update",
+        "matchOptions" : {
+          "propertyDefs" : {
+            "property" : [ {
+              "localname" : "NameKanji",
+              "name" : "NameKanji"
+            }, {
+              "localname" : "NameKana",
+              "name" : "NameKana"
+            }, {
+              "localname" : "Address",
+              "name" : "Address"
+            }, {
+              "localname" : "DoB",
+              "name" : "DoB"
+            }, {
+              "localname" : "Telephone",
+              "name" : "Telephone"
+            } ]
+          },
+          "algorithms" : {
+            "algorithm" : [ {
+              "name" : "double-metaphone",
+              "function" : "double-metaphone",
+              "namespace" : "http://marklogic.com/smart-mastering/algorithms",
+              "at" : "/com.marklogic.smart-mastering/algorithms/double-metaphone.xqy"
+            }, {
+              "name" : "thesaurus",
+              "function" : "thesaurus",
+              "namespace" : "http://marklogic.com/smart-mastering/algorithms",
+              "at" : "/com.marklogic.smart-mastering/algorithms/thesaurus.xqy"
+            }, {
+              "name" : "zip-match",
+              "function" : "zip-match",
+              "namespace" : "http://marklogic.com/smart-mastering/algorithms",
+              "at" : "/com.marklogic.smart-mastering/algorithms/zip.xqy"
+            }, {
+              "name" : "standard-reduction",
+              "function" : "standard-reduction"
+            } ]
+          },
+          "collections" : {
+            "content" : [ ]
+          },
+          "scoring" : {
+            "add" : [ {
+              "propertyName" : "NameKanji",
+              "weight" : "30"
+            }, {
+              "propertyName" : "NameKana",
+              "weight" : "20"
+            }, {
+              "propertyName" : "Address",
+              "weight" : "30"
+            }, {
+              "propertyName" : "DoB",
+              "weight" : "20"
+            }, {
+              "propertyName" : "Telephone",
+              "weight" : "30"
+            } ],
+            "expand" : [ ],
+            "reduce" : [ ]
+          },
+          "actions" : {
+            "action" : [ ]
+          },
+          "thresholds" : {
+            "threshold" : [ {
+              "above" : "130",
+              "label" : "Complete",
+              "action" : "merge"
+            }, {
+              "above" : "100",
+              "label" : "Partial",
+              "action" : "notify"
+            } ]
+          },
+          "tuning" : {
+            "maxScan" : 200
+          }
+        },
+        "outputFormat" : "json"
+      },
+      "customHook" : {
+        "module" : "",
+        "parameters" : { },
+        "user" : "",
+        "runBefore" : false
+      },
+      "retryLimit" : null,
+      "batchSize" : 100,
+      "threadCount" : 1,
+      "stepDefinitionName" : "default-mastering",
+      "stepDefinitionType" : "MASTERING"
+    }
+  }
+}

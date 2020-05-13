@@ -1,0 +1,30 @@
+{
+  "lang" : "zxx",
+  "name" : "Customer2-MappingCustomer2",
+  "description" : "",
+  "version" : 0,
+  "targetEntityType" : "http://example.org/Customer-0.0.1/Customer",
+  "sourceContext" : "/",
+  "sourceURI" : "/customer/customer2/2a8636b1-7200-41a0-9f75-8f158e8f0edf.json",
+  "properties" : {
+    "Address" : {
+      "sourcedFrom" : "address"
+    },
+    "Telephone" : {
+      "sourcedFrom" : "telephone"
+    },
+    "DoB" : {
+      "sourcedFrom" : "tutorialParseDate(birthday)"
+    },
+    "NameKanji" : {
+      "sourcedFrom" : "concat(lname,fname)"
+    },
+    "Id" : {
+      "sourcedFrom" : "id"
+    },
+    "NameKana" : {
+      "sourcedFrom" : "katakanaToHiragana(name_kana)"
+    }
+  },
+  "namespaces" : { }
+}
